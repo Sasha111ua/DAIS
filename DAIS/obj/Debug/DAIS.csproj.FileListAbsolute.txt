@@ -1,0 +1,45 @@
+c:\Users\HPLaptop\Documents\Visual Studio 2015\Projects\DAIS\DAIS\obj\Debug\DAIS.csprojResolveAssemblyReference.cache
+c:\Users\HPLaptop\Documents\Visual Studio 2015\Projects\DAIS\DAIS\bin\Bot Application1.dll.config
+c:\Users\HPLaptop\Documents\Visual Studio 2015\Projects\DAIS\DAIS\bin\Bot Application1.dll
+c:\Users\HPLaptop\Documents\Visual Studio 2015\Projects\DAIS\DAIS\bin\Bot Application1.pdb
+c:\Users\HPLaptop\Documents\Visual Studio 2015\Projects\DAIS\DAIS\bin\Autofac.dll
+c:\Users\HPLaptop\Documents\Visual Studio 2015\Projects\DAIS\DAIS\bin\Autofac.Integration.WebApi.dll
+c:\Users\HPLaptop\Documents\Visual Studio 2015\Projects\DAIS\DAIS\bin\Chronic.dll
+c:\Users\HPLaptop\Documents\Visual Studio 2015\Projects\DAIS\DAIS\bin\Microsoft.Bot.Builder.dll
+c:\Users\HPLaptop\Documents\Visual Studio 2015\Projects\DAIS\DAIS\bin\Microsoft.Bot.Connector.dll
+c:\Users\HPLaptop\Documents\Visual Studio 2015\Projects\DAIS\DAIS\bin\Microsoft.IdentityModel.Logging.dll
+c:\Users\HPLaptop\Documents\Visual Studio 2015\Projects\DAIS\DAIS\bin\Microsoft.IdentityModel.Protocol.Extensions.dll
+c:\Users\HPLaptop\Documents\Visual Studio 2015\Projects\DAIS\DAIS\bin\Microsoft.IdentityModel.Tokens.dll
+c:\Users\HPLaptop\Documents\Visual Studio 2015\Projects\DAIS\DAIS\bin\Microsoft.Rest.ClientRuntime.dll
+c:\Users\HPLaptop\Documents\Visual Studio 2015\Projects\DAIS\DAIS\bin\Microsoft.WindowsAzure.Configuration.dll
+c:\Users\HPLaptop\Documents\Visual Studio 2015\Projects\DAIS\DAIS\bin\Newtonsoft.Json.dll
+c:\Users\HPLaptop\Documents\Visual Studio 2015\Projects\DAIS\DAIS\bin\System.IdentityModel.Tokens.Jwt.dll
+c:\Users\HPLaptop\Documents\Visual Studio 2015\Projects\DAIS\DAIS\bin\System.Net.Http.Formatting.dll
+c:\Users\HPLaptop\Documents\Visual Studio 2015\Projects\DAIS\DAIS\bin\System.Web.Http.dll
+c:\Users\HPLaptop\Documents\Visual Studio 2015\Projects\DAIS\DAIS\bin\System.Web.Http.WebHost.dll
+c:\Users\HPLaptop\Documents\Visual Studio 2015\Projects\DAIS\DAIS\bin\Autofac.xml
+c:\Users\HPLaptop\Documents\Visual Studio 2015\Projects\DAIS\DAIS\bin\Autofac.Integration.WebApi.xml
+c:\Users\HPLaptop\Documents\Visual Studio 2015\Projects\DAIS\DAIS\bin\Microsoft.Bot.Builder.xml
+c:\Users\HPLaptop\Documents\Visual Studio 2015\Projects\DAIS\DAIS\bin\Microsoft.Bot.Connector.xml
+c:\Users\HPLaptop\Documents\Visual Studio 2015\Projects\DAIS\DAIS\bin\Microsoft.IdentityModel.Logging.xml
+c:\Users\HPLaptop\Documents\Visual Studio 2015\Projects\DAIS\DAIS\bin\Microsoft.IdentityModel.Protocol.Extensions.xml
+c:\Users\HPLaptop\Documents\Visual Studio 2015\Projects\DAIS\DAIS\bin\Microsoft.IdentityModel.Tokens.xml
+c:\Users\HPLaptop\Documents\Visual Studio 2015\Projects\DAIS\DAIS\bin\Microsoft.WindowsAzure.Configuration.xml
+c:\Users\HPLaptop\Documents\Visual Studio 2015\Projects\DAIS\DAIS\bin\Newtonsoft.Json.xml
+c:\Users\HPLaptop\Documents\Visual Studio 2015\Projects\DAIS\DAIS\bin\System.IdentityModel.Tokens.Jwt.pdb
+c:\Users\HPLaptop\Documents\Visual Studio 2015\Projects\DAIS\DAIS\bin\System.IdentityModel.Tokens.Jwt.xml
+c:\Users\HPLaptop\Documents\Visual Studio 2015\Projects\DAIS\DAIS\bin\System.Net.Http.Formatting.xml
+c:\Users\HPLaptop\Documents\Visual Studio 2015\Projects\DAIS\DAIS\bin\System.Web.Http.xml
+c:\Users\HPLaptop\Documents\Visual Studio 2015\Projects\DAIS\DAIS\bin\System.Web.Http.WebHost.xml
+c:\Users\HPLaptop\Documents\Visual Studio 2015\Projects\DAIS\DAIS\bin\ar\Microsoft.Bot.Builder.resources.dll
+c:\Users\HPLaptop\Documents\Visual Studio 2015\Projects\DAIS\DAIS\bin\en\Microsoft.Bot.Builder.resources.dll
+c:\Users\HPLaptop\Documents\Visual Studio 2015\Projects\DAIS\DAIS\bin\es\Microsoft.Bot.Builder.resources.dll
+c:\Users\HPLaptop\Documents\Visual Studio 2015\Projects\DAIS\DAIS\bin\fa\Microsoft.Bot.Builder.resources.dll
+c:\Users\HPLaptop\Documents\Visual Studio 2015\Projects\DAIS\DAIS\bin\fr\Microsoft.Bot.Builder.resources.dll
+c:\Users\HPLaptop\Documents\Visual Studio 2015\Projects\DAIS\DAIS\bin\ja\Microsoft.Bot.Builder.resources.dll
+c:\Users\HPLaptop\Documents\Visual Studio 2015\Projects\DAIS\DAIS\bin\ru\Microsoft.Bot.Builder.resources.dll
+c:\Users\HPLaptop\Documents\Visual Studio 2015\Projects\DAIS\DAIS\bin\zh-hans\Microsoft.Bot.Builder.resources.dll
+c:\Users\HPLaptop\Documents\Visual Studio 2015\Projects\DAIS\DAIS\obj\Debug\Bot Application1.dll
+c:\Users\HPLaptop\Documents\Visual Studio 2015\Projects\DAIS\DAIS\obj\Debug\Bot Application1.pdb
+c:\Users\HPLaptop\Documents\Visual Studio 2015\Projects\DAIS\DAIS\bin\cs\Microsoft.Bot.Builder.resources.dll
+c:\Users\HPLaptop\Documents\Visual Studio 2015\Projects\DAIS\DAIS\bin\de-de\Microsoft.Bot.Builder.resources.dll
