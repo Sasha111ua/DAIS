@@ -14,7 +14,7 @@ namespace Microsoft.Bot.Sample.AlarmBot.Models
     /// </summary>
     public interface IAlarmRenderer
     {
-        Task RenderAsync(IBotToUser botToUser, string title, DateTime now);
+        Task RenderAsync(IBotToUser botToUser, string title, string body, DateTime now);
     }
 
     [Serializable]
@@ -27,16 +27,17 @@ namespace Microsoft.Bot.Sample.AlarmBot.Models
             SetField.NotNull(out this.scheduler, nameof(scheduler), scheduler);
             SetField.NotNull(out this.actions, nameof(actions), actions);
         }
-        async Task IAlarmRenderer.RenderAsync(IBotToUser botToUser, string title, DateTime now)
+        async Task IAlarmRenderer.RenderAsync(IBotToUser botToUser, string title, string body, DateTime now)
         {
-            Alarm alarm;
-            if (this.scheduler.TryFindAlarm(title, out alarm))
-            {
+            Alarm alarm = new Alarm();
+            //if (this.scheduler.TryFindAlarm(title, out alarm))
+            //{
                 var card = new HeroCard();
-                card.Title = alarm.Title ?? "Default Alarm";
-                card.Subtitle = alarm.State
-                    ? (alarm.When.HasValue ? $"{alarm.When}" : "not set")
-                    : "disabled";
+                card.Title = title;
+                //card.Subtitle = alarm.State
+                //    ? (alarm.When.HasValue ? $"{alarm.When}" : "not set")
+                //    : "disabled";
+                card.Subtitle = body;
 
                 IAlarmable query = alarm;
                 DateTime next;
@@ -54,11 +55,11 @@ namespace Microsoft.Bot.Sample.AlarmBot.Models
                 message.Attachments = new[] { card.ToAttachment() };
 
                 await botToUser.PostAsync(message);
-            }
-            else
-            {
-                throw new AlarmNotFoundException();
-            }
+            //}
+            //else
+            //{
+            //    throw new AlarmNotFoundException();
+            //}
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Microsoft.Bot.Sample.AlarmBot.Models
     /// </summary>
     public interface IAlarmService
     {
-        Task UpsertAsync(string title, DateTime? when, bool? state);
+        Task UpsertAsync(string subject, string body, bool? state);
         Task DeleteAsync(string title);
         Task SnoozeAsync(string title);
     }
@@ -31,10 +31,13 @@ namespace Microsoft.Bot.Sample.AlarmBot.Models
     {
         private readonly IAlarmScheduler scheduler;
         private readonly ResumptionCookie cookie;
-        public AlarmService(IAlarmScheduler scheduler, ResumptionCookie cookie)
+        private readonly IBotToUser botToUser;
+
+        public AlarmService(IAlarmScheduler scheduler, IBotToUser botToUser, ResumptionCookie cookie)
         {
             SetField.NotNull(out this.scheduler, nameof(scheduler), scheduler);
             SetField.NotNull(out this.cookie, nameof(cookie), cookie);
+            SetField.NotNull(out this.botToUser, nameof(botToUser), botToUser);
         }
         async Task IAlarmService.DeleteAsync(string title)
         {
@@ -50,35 +53,36 @@ namespace Microsoft.Bot.Sample.AlarmBot.Models
         }
         async Task IAlarmService.SnoozeAsync(string title)
         {
-            Alarm alarm;
-            if (this.scheduler.TryFindAlarm(title, out alarm))
-            {
-                alarm.When = alarm.When + TimeSpan.FromMinutes(1);
-            }
-            else
-            {
-                throw new AlarmNotFoundException();
-            }
+            //Alarm alarm;
+            //if (this.scheduler.TryFindAlarm(title, out alarm))
+            //{
+            //    alarm.When = alarm.When + TimeSpan.FromMinutes(1);
+            //}
+            //else
+            //{
+            //    throw new AlarmNotFoundException();
+            //}
+            await botToUser.PostAsync("Your Email was sent");
         }
-        async Task IAlarmService.UpsertAsync(string title, DateTime? when, bool? state)
+        async Task IAlarmService.UpsertAsync(string subject, string body, bool? state)
         {
             Alarm alarm;
-            if (!this.scheduler.TryFindAlarm(title, out alarm))
-            {
-                alarm = new Alarm() { Title = title, State = true, Next = ExternalEvent.HandleAlarm, Cookie = this.cookie };
+            //if (!this.scheduler.TryFindAlarm(title, out alarm))
+            //{
+                alarm = new Alarm() {Subject = subject, Body = body, State = true, Next = ExternalEvent.HandleAlarm, Cookie = this.cookie };
 
                 this.scheduler.Alarms.Add(alarm);
-            }
+            //}
 
             if (state.HasValue)
             {
                 alarm.State = state.Value;
             }
 
-            if (when.HasValue)
-            {
-                alarm.When = when.Value;
-            }
+            //if (when.HasValue)
+            //{
+            //    alarm.When = when.Value;
+            //}
         }
     }
 
@@ -103,13 +107,13 @@ namespace Microsoft.Bot.Sample.AlarmBot.Models
         async Task IAlarmService.SnoozeAsync(string title)
         {
             await this.inner.SnoozeAsync(title);
-            await this.renderer().RenderAsync(this.botToUser, title, this.clock.Now);
+            //await this.renderer().RenderAsync(this.botToUser, title, "", this.clock.Now);
         }
 
-        async Task IAlarmService.UpsertAsync(string title, DateTime? when, bool? state)
+        async Task IAlarmService.UpsertAsync(string subject, string body, bool? state)
         {
-            await this.inner.UpsertAsync(title, when, state);
-            await this.renderer().RenderAsync(this.botToUser, title, this.clock.Now);
+            await this.inner.UpsertAsync(subject, body, state);
+            await this.renderer().RenderAsync(this.botToUser, subject, body, this.clock.Now);
         }
     }
 }

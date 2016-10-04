@@ -145,6 +145,7 @@
     <Compile Include="Models\AlarmScorable.cs" />
     <Compile Include="Models\AlarmService.cs" />
     <Compile Include="Models\Clock.cs" />
+    <Compile Include="Models\CurrencyExchangeServerResponse.cs" />
     <Compile Include="Models\ExternalEvent.cs" />
     <Compile Include="Models\SendEmail.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -153,6 +154,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <None Include="Properties\PublishProfiles\BotApplication120160825113350 - Web Deploy %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\BotApplication120160825113350 - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\ChatDias - Web Deploy.pubxml" />
+    <None Include="Properties\PublishProfiles\chatdiasbot2.pubxml" />
+    <None Include="Properties\PublishProfiles\DAIS.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

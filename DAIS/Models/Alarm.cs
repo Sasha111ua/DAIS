@@ -17,11 +17,15 @@ namespace Microsoft.Bot.Sample.AlarmBot.Models
         public string Title { get; set; }
         public DateTime? When { get; set; }
         public bool State { get; set; }
+        public string Subject { get; internal set; }
+        public string Body { get; internal set; }
 
         // these are the properties necessary to handle a external event and proactively post a message to the user
         public delegate Task NextDelegate(Alarm alarm, DateTime now, CancellationToken token);
         public NextDelegate Next { get; set; }
         public ResumptionCookie Cookie { get; set; }
+        
+
         public override string ToString()
         {
             var state = this.State ? "enabled" : "disabled";

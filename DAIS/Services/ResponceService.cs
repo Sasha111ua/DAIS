@@ -1,8 +1,11 @@
 ﻿using DAIS.Helpers;
+using DAIS.Models;
 using Microsoft.Bot.Builder.Luis.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web;
 using static DAIS.Dialogs.BuiltIn;
 
@@ -12,7 +15,7 @@ namespace DAIS.Services
     {
         public string CreateGreetingsResponce(LuisResult request)
         {
-            return "Hi my name is DAIS - Diatom's artificial intelligence system. Let me help you!";
+            return "Hi my name is DAIS v3 - Diatom's artificial intelligence system. Let me help you!";
         }
 
         public string CreateNoneResponse(LuisResult request)
@@ -23,9 +26,14 @@ namespace DAIS.Services
                 entity = request.Query;
             }
 
+            if (entity.CompareAndEquals("your name"))
+            {
+                return "My name is DAIS!";
+            }
+
             if (entity.CompareAndEquals("thanks", "thank you", "thank you dais", "thanks dais"))
             {
-                return "Your welcome";
+                return "You are welcome";
             }
 
             if (entity.CompareAndEquals("this is very good", "this is good"))
@@ -62,8 +70,9 @@ namespace DAIS.Services
 
             else
             {
-                return "Sorry I dont undersatand";
+                return GetDebugInfo(request);
             }
+            
         }
 
         public string CreateCompanyInfoResponse(LuisResult request)
@@ -76,9 +85,9 @@ namespace DAIS.Services
             {
                 var entity = informationTypeEntity.Entity;
 
-                if (entity.CompareAndEquals("how many developers"))
+                if (entity.CompareAndEquals("how many developers", "how many people"))
                 {
-                    return "71";
+                    return "Diatom has 70 people in total for today";
                 }
 
                 else if (entity.CompareAndEquals("call me", "phone me"))
@@ -116,7 +125,7 @@ namespace DAIS.Services
                     return "We have a lot of projects";
                 }
 
-                else if (entity.CompareAndEquals("located", "address", "you from", "are you from", "diatom from"))
+                else if (entity.CompareAndEquals("located", "address", "you from", "are you from", "diatom from", "where are you from"))
                 {
                     return "We are in Riga Straupes 5, k-1,";
                 }
@@ -143,7 +152,7 @@ namespace DAIS.Services
                     }
                 }
 
-                else if (entity.CompareAndEquals("contact you", "email", "phone number"))
+                else if (entity.CompareAndEquals("contact you", "email", "phone number", "contacts"))
                 {
                     return "Our email is diatom@rer.er anf our phone is 222.222.22";
                 }
@@ -175,14 +184,14 @@ namespace DAIS.Services
                     return "Yes we have an experts in this technology";
                 }
 
-                else if (entity.CompareAndEquals("call you"))
+                else if (entity.CompareAndEquals("call you", "call"))
                 {
                     return "Our phone is 222.222.22";
                 }
 
                 else if (entity.CompareAndEquals("ceo", "head of company"))
                 {
-                    return "Our SEO is Denis Gorshkov";
+                    return "Our CEO is Denis Gorshkov";
                 }
 
                 else if (entity.CompareAndEquals("cto", "head of technology"))
@@ -204,8 +213,8 @@ namespace DAIS.Services
             {
 
             }
-
-            return "sorry I did not have an answer on this so far. But I learn fast.";
+            return GetDebugInfo(request);
+            //return "sorry I did not have an answer on this so far. But I learn fast.";
         }
 
         public string TryGetEmail(LuisResult result)
@@ -220,6 +229,49 @@ namespace DAIS.Services
                 return "alexemail";
             }
             return null;
+        }
+
+        private string GetDebugInfo(LuisResult request)
+        {
+            return request.Intents.FirstOrDefault().Intent + ", key word: " + request.Entities.FirstOrDefault()?.Entity;
+        }
+
+        public async Task<string> CreateCompanyCurrencyConverter(LuisResult result)
+        {
+            var ammount = result.Entities.FirstOrDefault(t => t.Type == Entities.Ammount)?.Entity;
+            var baseCurrency = result.Entities.FirstOrDefault(t => t.Type == Entities.BaseCurrency)?.Entity;
+            if(baseCurrency != null)
+                baseCurrency = GetCurrentcyCode(baseCurrency);
+            var targetCurrency = result.Entities.FirstOrDefault(t => t.Type == Entities.TargetCurrency)?.Entity;
+            if (targetCurrency != null)
+                targetCurrency = GetCurrentcyCode(targetCurrency);
+
+            if (ammount != null && baseCurrency != null && targetCurrency != null)
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    var response = await client.GetAsync("http://api.fixer.io/latest?base="+baseCurrency);
+                    var stringResponse = await response.Content.ReadAsStringAsync();
+                    var currencyParcedResponse = Newtonsoft.Json.JsonConvert.DeserializeObject<CurrencyExchangeServerResponse>(stringResponse);
+                    var exchangeRate = (float)currencyParcedResponse.rates.GetType().GetProperty(targetCurrency).GetValue(currencyParcedResponse.rates, null);
+                    var exchangeResult = Math.Round((float.Parse(ammount) * exchangeRate), 2);
+                    return exchangeResult.ToString() + " " + targetCurrency;
+                }
+            }
+            return GetDebugInfo(result);
+        }
+
+        private string GetCurrentcyCode(string currency)
+        {
+            if (currency.CompareAndEquals("usd", "us dollars", "dollars", "dollar", "dolar", "dolars", "us dollar") || currency.Contains("dollar"))
+            {
+                currency = "USD";
+            }
+            if (currency.CompareAndEquals("euro", "evro", "eur"))
+            {
+                currency = "EUR";
+            }
+            return currency;
         }
     }
 }

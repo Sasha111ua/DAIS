@@ -35,6 +35,12 @@ namespace DAIS.Dialogs
             public static string Language = "Language";
 
             public static string Technology = "technology";
+
+            public static string BaseCurrency = "Base currency";
+
+            public static string TargetCurrency = "target currency";
+
+            public static string Ammount = "ammount";
         }
     }
 
@@ -118,6 +124,13 @@ namespace DAIS.Dialogs
             context.Wait(MessageReceived);
         }
 
+        [LuisIntent("CurrencyConverter")]
+        public async Task RespondeToCurrencyConverter(IDialogContext context, LuisResult result)
+        {
+            await context.PostAsync(await responseService.CreateCompanyCurrencyConverter(result));
+            context.Wait(MessageReceived);
+        }
+
         [LuisIntent("Send email")]
         public async Task RespondeToSendEmail(IDialogContext context, LuisResult result)
         {
@@ -133,6 +146,7 @@ namespace DAIS.Dialogs
 
         private async Task EmailFormComplete(IDialogContext context, IAwaitable<SendEmail> result)
         {
+
             SendEmail sendEmail = null;
             try
             {
@@ -141,19 +155,22 @@ namespace DAIS.Dialogs
             catch (OperationCanceledException)
             {
                 await context.PostAsync("You canceled the form!");
+                context.Wait(MessageReceived);
                 return;
             }
 
             if (sendEmail != null)
             {
-                await context.PostAsync("Your Email has been sent");
+                await this.service.UpsertAsync(sendEmail.Subject, sendEmail.Body, null);
+                //await context.PostAsync("Your Email has been sent");
+                context.Wait(MessageReceived);
             }
             else
             {
                 await context.PostAsync("Form returned empty response!");
+                context.Wait(MessageReceived);
             }
 
-            context.Wait(MessageReceived);
         }
 
         private static IForm<SendEmail> BuildForm()
@@ -225,7 +242,7 @@ namespace DAIS.Dialogs
                 }
             }
 
-            await this.service.UpsertAsync(title, when, state);
+            await this.service.UpsertAsync("","", state);
 
             context.Wait(MessageReceived);
         }
@@ -254,7 +271,7 @@ namespace DAIS.Dialogs
             TryFindTitle(result, out title);
             try
             {
-                await this.service.UpsertAsync(title, null, state: false);
+                await this.service.UpsertAsync(null, "", state: false);
             }
             catch (AlarmNotFoundException)
             {

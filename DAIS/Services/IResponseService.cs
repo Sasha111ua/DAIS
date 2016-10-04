@@ -1,4 +1,6 @@
 ﻿using Microsoft.Bot.Builder.Luis.Models;
+using Microsoft.Bot.Connector;
+using System.Threading.Tasks;
 
 namespace DAIS.Services
 {
@@ -11,5 +13,7 @@ namespace DAIS.Services
         string CreateCompanyInfoResponse(LuisResult request);
 
         string TryGetEmail(LuisResult result);
+
+        Task<string> CreateCompanyCurrencyConverter(LuisResult result);
     }
 }

@@ -31,10 +31,8 @@ namespace Microsoft.Bot.Sample.AlarmBot.Models
 
         public static class Verbs
         {
-            public const string Snooze = "snooze";
-            public const string Delete = "delete";
-            public const string Enable = "enable";
-            public const string Disable = "disable";
+            public const string Send = "send";
+            public const string Cancel = "cancel";
         }
 
         public static readonly IReadOnlyList<string> AllowedVerbs = typeof(Verbs).GetFields().Select(p => (string)p.GetValue(null)).ToArray();
@@ -80,17 +78,17 @@ namespace Microsoft.Bot.Sample.AlarmBot.Models
                     Value = FormatValue(verb, alarm)
                 };
 
-            yield return ActionFor(Verbs.Snooze);
-            yield return ActionFor(Verbs.Delete);
+            yield return ActionFor(Verbs.Send);
+            yield return ActionFor(Verbs.Cancel);
 
-            if (alarm.State)
-            {
-                yield return ActionFor(Verbs.Disable);
-            }
-            else
-            {
-                yield return ActionFor(Verbs.Enable);
-            }
+            //if (alarm.State)
+            //{
+            //    yield return ActionFor(Verbs.Disable);
+            //}
+            //else
+            //{
+            //    yield return ActionFor(Verbs.Enable);
+            //}
         }
 
         async Task<object> IScorable<double>.PrepareAsync<Item>(Item item, CancellationToken token)
@@ -124,18 +122,19 @@ namespace Microsoft.Bot.Sample.AlarmBot.Models
             var title = verbTitle.Item2;
             switch (verb)
             {
-                case Verbs.Snooze:
+                case Verbs.Send:
                     await this.service.SnoozeAsync(title);
+                    
                     break;
-                case Verbs.Delete:
+                case Verbs.Cancel:
                     await this.service.DeleteAsync(title);
                     break;
-                case Verbs.Disable:
-                    await this.service.UpsertAsync(title, when: null, state: false);
-                    break;
-                case Verbs.Enable:
-                    await this.service.UpsertAsync(title, when: null, state: true);
-                    break;
+                //case Verbs.Disable:
+                //    await this.service.UpsertAsync(title, when: null, state: false);
+                //    break;
+                //case Verbs.Enable:
+                //    await this.service.UpsertAsync(title, when: null, state: true);
+                //    break;
                 default:
                     throw new NotImplementedException();
             }
