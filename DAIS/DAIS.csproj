@@ -132,21 +132,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\MessagesController.cs" />
-    <Compile Include="Dialogs\AlarmRingDialog.cs" />
     <Compile Include="Dialogs\DAISLuisDialog.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\Extensions.cs" />
-    <Compile Include="Models\Alarm.cs" />
-    <Compile Include="Models\AlarmModule.cs" />
-    <Compile Include="Models\AlarmRenderer.cs" />
-    <Compile Include="Models\AlarmScheduler.cs" />
-    <Compile Include="Models\AlarmScorable.cs" />
-    <Compile Include="Models\AlarmService.cs" />
-    <Compile Include="Models\Clock.cs" />
+    <Compile Include="Models\Email.cs" />
+    <Compile Include="Models\DAISModule.cs" />
+    <Compile Include="Models\EmailRenderer.cs" />
+    <Compile Include="Models\EmailScorable.cs" />
+    <Compile Include="Models\EmailService.cs" />
     <Compile Include="Models\CurrencyExchangeServerResponse.cs" />
-    <Compile Include="Models\ExternalEvent.cs" />
     <Compile Include="Models\SendEmail.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\IResponseService.cs" />

@@ -11,12 +11,12 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http;
 
-namespace Microsoft.Bot.Sample.AlarmBot.Controllers
+namespace Microsoft.Bot.DAIS.Controllers
 {
     // Autofac provides a mechanism to inject ActionFilterAttributes from the container
     // but seems to require the implementation of special interfaces
     // https://github.com/autofac/Autofac.WebApi/issues/6
-    [BotAuthentication]
+    //[BotAuthentication]
     public sealed class MessagesController : ApiController
     {
         // TODO: "service locator"

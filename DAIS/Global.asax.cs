@@ -1,14 +1,9 @@
 ﻿using Autofac;
 using Autofac.Integration.WebApi;
 using Microsoft.Bot.Builder.Dialogs.Internals;
-using Microsoft.Bot.Sample.AlarmBot.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using Microsoft.Bot.DAIS.Models;
 using System.Reflection;
-using System.Web;
 using System.Web.Http;
-using System.Web.Routing;
 
 namespace DAIS
 {
@@ -26,8 +21,7 @@ namespace DAIS
                 builder.RegisterModule(new DialogModule());
                 // register some configuration
                 builder.Register(c => new BotIdResolver(BotId)).AsImplementedInterfaces().SingleInstance();
-                // register the alarm dependencies
-                builder.RegisterModule(new AlarmModule());
+                builder.RegisterModule(new DAISModule());
 
                 // Get your HttpConfiguration.
                 var config = GlobalConfiguration.Configuration;

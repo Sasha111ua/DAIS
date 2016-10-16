@@ -2,29 +2,23 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Bot.Connector;
 using Microsoft.Bot.Builder.Internals.Fibers;
 
-namespace Microsoft.Bot.Sample.AlarmBot.Models
+namespace Microsoft.Bot.DAIS.Models
 {
-    /// <summary>
-    /// This service provides a list of actions that can be taken for an alarm.
-    /// These actions are globally available based on the <see cref="AlarmScorable"/> implementation
-    /// that inspects every incoming message.
-    /// </summary>
-    public interface IAlarmActions
+    public interface IEmailActions
     {
-        IEnumerable<CardAction> ActionsFor(Alarm alarm);
+        IEnumerable<CardAction> ActionsFor(Email email);
     }
 
     [Serializable]
-    public sealed class AlarmScorable : IAlarmActions, IScorable<double>
+    public sealed class EmailScorable : IEmailActions, IScorable<double>
     {
-        private readonly IAlarmService service;
-        public AlarmScorable(IAlarmService service)
+        private readonly IEmailService service;
+        public EmailScorable(IEmailService service)
         {
             SetField.NotNull(out this.service, nameof(service), service);
         }
@@ -38,9 +32,9 @@ namespace Microsoft.Bot.Sample.AlarmBot.Models
         public static readonly IReadOnlyList<string> AllowedVerbs = typeof(Verbs).GetFields().Select(p => (string)p.GetValue(null)).ToArray();
 
         public const string Prefix = "button";
-        public static string FormatValue(string verb, Alarm alarm)
+        public static string FormatValue(string verb, Email email)
         {
-            return $"{Prefix}-{verb}-{alarm.Title}";
+            return $"{Prefix}-{verb}-{email.Title}";
         }
 
         public bool TryParseValue(string value, out string verb, out string title)
@@ -68,27 +62,18 @@ namespace Microsoft.Bot.Sample.AlarmBot.Models
             return false;
         }
 
-        IEnumerable<CardAction> IAlarmActions.ActionsFor(Alarm alarm)
+        IEnumerable<CardAction> IEmailActions.ActionsFor(Email email)
         {
             Func<string, CardAction> ActionFor = verb =>
                 new CardAction()
                 {
                     Type = ActionTypes.ImBack,
                     Title = verb,
-                    Value = FormatValue(verb, alarm)
+                    Value = FormatValue(verb, email)
                 };
 
             yield return ActionFor(Verbs.Send);
             yield return ActionFor(Verbs.Cancel);
-
-            //if (alarm.State)
-            //{
-            //    yield return ActionFor(Verbs.Disable);
-            //}
-            //else
-            //{
-            //    yield return ActionFor(Verbs.Enable);
-            //}
         }
 
         async Task<object> IScorable<double>.PrepareAsync<Item>(Item item, CancellationToken token)
@@ -123,18 +108,12 @@ namespace Microsoft.Bot.Sample.AlarmBot.Models
             switch (verb)
             {
                 case Verbs.Send:
-                    await this.service.SnoozeAsync(title);
+                    await this.service.SendAsync(title);
                     
                     break;
                 case Verbs.Cancel:
-                    await this.service.DeleteAsync(title);
+                    await this.service.CancelAsync(title);
                     break;
-                //case Verbs.Disable:
-                //    await this.service.UpsertAsync(title, when: null, state: false);
-                //    break;
-                //case Verbs.Enable:
-                //    await this.service.UpsertAsync(title, when: null, state: true);
-                //    break;
                 default:
                     throw new NotImplementedException();
             }
